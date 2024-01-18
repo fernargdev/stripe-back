@@ -1,7 +1,7 @@
 ### GET api/notes
 GET http://localhost:3001/api/notes
 
-### POST /api/persons
+### POST /api/pay
 POST http://localhost:3001/api/pay
 Content-Type: application/json
 
