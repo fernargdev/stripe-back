@@ -11,7 +11,7 @@ paymentsRouter.get('/api/notes', (req, res) => {
 })
 
 // POSTS
-paymentsRouter.post('/api/notes', async (req, res) => {
+paymentsRouter.post('/api/pay', async (req, res) => {
   const payment = req.body.items[0]
 
   // Crear la descripción del booking
