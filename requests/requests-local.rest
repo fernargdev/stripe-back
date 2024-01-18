@@ -5,12 +5,10 @@ GET http://localhost:3001/api/notes
 POST http://localhost:3001/api/pay
 Content-Type: application/json
 
-[
-  {
-    "idc": "187686",
-    "idf": "187690",
-    "total": 190.0,
-    "company": "ipramix",
-    "completed": 1
-  }
-]
+{
+  "idc": "187686",
+  "idf": "187690",
+  "total": 190.0,
+  "company": "ipramix",
+  "completed": 1
+}
