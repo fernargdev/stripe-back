@@ -1,5 +1,6 @@
 const paymentsRouter = require('express').Router()
 const notes = require('../models/notes')
+const config = require('../utils/config')
 
 // GETS
 paymentsRouter.get('/', (req, res) => {
@@ -12,37 +13,45 @@ paymentsRouter.get('/api/notes', (req, res) => {
 
 // POSTS
 paymentsRouter.post('/api/pay', async (req, res) => {
-  const payment = req.body.items[0]
+  try {
+    console.log(req.body)
 
-  // Crear la descripción del booking
-  let description = `Pago para ${payment.company} con idc ${payment.idc} y idf ${payment.idf}`
-  let name = `Pago - $${payment.total}`
+    const payment = req.body
 
-  //   Create Checkout Session
-  const session = await config.STRIPE_TEST_PUBLIC.checkout.sessions.create({
-    payment_method_types: ['card'],
-    mode: 'payment',
-    success_url: `https://www.iracubacrm.com/DPage.aspx?Key=26554&
+    // Crear la descripción del booking
+    let description = `Pago para ${payment.company} con idc ${payment.idc} y idf ${payment.idf}`
+    let name = `Pago - $${payment.total}`
+
+    //   Create Checkout Session
+    const session = await config.STRIPE_TEST_PUBLIC.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'payment',
+      success_url: `https://www.iracubacrm.com/DPage.aspx?Key=26554&
     idc=${payment.idc}&idf=${payment.idf}&idcp=1&company=${payment.company}`,
-    cancel_url: `https://www.iracubacrm.com/DPage.aspx?Key=26554&
+      cancel_url: `https://www.iracubacrm.com/DPage.aspx?Key=26554&
     idc=${payment.idc}&idf=${payment.idf}&idcp=0&company=${payment.company}`,
-    line_items: [
-      {
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: name,
-            // Agregar la descripción a los datos del producto
-            description: description,
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: name,
+              // Agregar la descripción a los datos del producto
+              description: description,
+            },
+            unit_amount: payment.total * 100,
           },
-          unit_amount: payment.total * 100,
+          quantity: 1,
         },
-        quantity: 1,
-      },
-    ],
-  })
+      ],
+    })
 
-  res.json(session.url)
+    res.json(session.url)
+  } catch (error) {
+    return res.status(400).json({
+      error: error.message,
+    })
+  }
 })
 
 module.exports = paymentsRouter
