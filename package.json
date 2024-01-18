@@ -1,0 +1,11 @@
+{
+  "name": "stripe-back",
+  "version": "1.0.0",
+  "description": "Stripe Backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Fernando Angel Rodriguez Gonzalez",
+  "license": "ISC"
+}
