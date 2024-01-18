@@ -1,6 +1,7 @@
 const paymentsRouter = require('express').Router()
 const notes = require('../models/notes')
 const config = require('../utils/config')
+const stripe = require('stripe')
 
 // GETS
 paymentsRouter.get('/', (req, res) => {
@@ -14,16 +15,18 @@ paymentsRouter.get('/api/notes', (req, res) => {
 // POSTS
 paymentsRouter.post('/api/pay', async (req, res) => {
   try {
-    console.log(req.body)
+    console.log(req.body[0])
 
-    const payment = req.body
+    const payment = req.body[0]
 
     // Crear la descripción del booking
     let description = `Pago para ${payment.company} con idc ${payment.idc} y idf ${payment.idf}`
     let name = `Pago - $${payment.total}`
 
     //   Create Checkout Session
-    const session = await config.STRIPE_TEST_PUBLIC.checkout.sessions.create({
+    const session = await stripe(
+      config.STRIPE_TEST_SECRET
+    ).checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
       success_url: `https://www.iracubacrm.com/DPage.aspx?Key=26554&
@@ -50,6 +53,7 @@ paymentsRouter.post('/api/pay', async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       error: error.message,
+      message: req.body[0].company,
     })
   }
 })
