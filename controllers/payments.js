@@ -24,7 +24,7 @@ paymentsRouter.post('/api/pay', async (req, res) => {
     let name = `Pago - $${payment.total}`
 
     // Stripe Checkout
-    const stripeCheckout = stripe(config.STRIPE_TEST_SECRET).checkout
+    const stripeCheckout = stripe(config.STRIPE_PRODUCTION_SECRET).checkout
 
     //   Create Checkout Session
     const session = await stripeCheckout.sessions.create({
