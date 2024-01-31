@@ -12,6 +12,17 @@ Content-Type: application/json
   "company": "EMPRESA CARNICA SANCTI SPIRITUS"
 }
 
+### POST /api/pay
+POST http://localhost:3001/api/pay
+Content-Type: application/json
+
+{
+  "idc": "sdfsdfsdf",
+  "idf": "sdfsdfsdf",
+  "total": 5.101011,
+  "company": "sdfsdfsdfsdf sdfsdfsdf sdfsdfsdf sdfsdfdsf"
+}
+
 # https://iracuba.com/payhtml?idc=399754&idf=403140&total=5.10&company=Empresa%20C%C3%A1rnica%20de%20Sancti-Sp%C3%ADritus
 
 # https://iracuba.com/payhtml?idc=399754&idf=403143&total=5.10&company=Empresa%20C%C3%A1rnica%20de%20Sancti-Sp%C3%ADritus
