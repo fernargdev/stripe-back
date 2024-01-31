@@ -42,7 +42,7 @@ paymentsRouter.post('/api/pay', async (req, res) => {
               name: name,
               description: description,
             },
-            unit_amount: payment.total * 100,
+            unit_amount: Math.round(payment.total * 100),
           },
           quantity: 1,
         },

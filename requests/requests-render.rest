@@ -1,0 +1,17 @@
+### GET api/notes
+GET https://stripe-back-3943.onrender.com/api/notes
+
+### POST /api/pay
+POST https://stripe-back-3943.onrender.com/api/pay
+Content-Type: application/json
+
+{
+  "idc": "399754",
+  "idf": "403140",
+  "total": 5.10,
+  "company": "EMPRESA CARNICA SANCTI SPIRITUS"
+}
+
+# https://iracuba.com/payhtml?idc=399754&idf=403140&total=5.10&company=Empresa%20C%C3%A1rnica%20de%20Sancti-Sp%C3%ADritus
+
+# https://iracuba.com/payhtml?idc=399754&idf=403143&total=5.10&company=Empresa%20C%C3%A1rnica%20de%20Sancti-Sp%C3%ADritus
