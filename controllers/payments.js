@@ -75,9 +75,9 @@ paymentsRouter.post('/api/shop', async (req, res) => {
     const session = await stripeCheckout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      success_url: `https://www.iracubacrm.com/DPage.aspx?Key=26600&
+      success_url: `https://www.iracubacrm.com/DPage.aspx?Key=26606&
       idc=${payment.idc}&idf=${payment.idf}&idcp=1&company=${payment.company}`,
-      cancel_url: `https://www.iracubacrm.com/DPage.aspx?Key=26600&
+      cancel_url: `https://www.iracubacrm.com/DPage.aspx?Key=26606&
       idc=${payment.idc}&idf=${payment.idf}&idcp=0&company=${payment.company}`,
       line_items: [
         {
