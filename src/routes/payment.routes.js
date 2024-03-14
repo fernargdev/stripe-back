@@ -6,10 +6,14 @@ const {
   stripeWebhook,
 } = require('../controllers/payments.controller')
 
-router.post('/stripe-single-pay', express.json(), stripeSinglePay)
+router.get('/api', (req, res) => {
+  res.json({ message: 'WELCOME' })
+})
+
+router.post('/api/pay', express.json(), stripeSinglePay)
 
 router.post(
-  '/stripe-webhook',
+  '/api/stripe-webhook',
   express.raw({ type: 'application/json' }),
   stripeWebhook
 )

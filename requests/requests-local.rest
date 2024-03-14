@@ -1,5 +1,5 @@
-### GET api/notes
-GET http://localhost:3001/api/notes
+### GET home
+GET http://localhost:3001/api
 
 ### POST /api/pay
 POST http://localhost:3001/api/pay
@@ -22,4 +22,9 @@ Content-Type: application/json
   "total": 500.10101011,
   "company": "sdfsdfsdfsdf sdfsdfsdf sdfsdfsdf sdfsdfdsf"
 }
+
+### POST /api/stripe-webhook 
+POST http://localhost:3001/api/stripe-webhook
+Content-Type: application/json
+
 
