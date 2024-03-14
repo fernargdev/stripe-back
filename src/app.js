@@ -1,11 +1,12 @@
 const express = require('express')
+const app = express()
+app.disable('x-powered-by')
+
 const cors = require('cors')
 
-const app = express()
-const paymentsRouter = require('./controllers/payments')
-
 app.use(cors())
-app.use(express.json())
-app.use(paymentsRouter)
+
+const paymentRouter = require('./routes/payment.routes')
+app.use(paymentRouter)
 
 module.exports = app
