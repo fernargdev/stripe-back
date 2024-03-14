@@ -1,5 +1,6 @@
 const config = require('../utils/config')
 const stripe = require('stripe')
+const { getConnection, sql, queries } = require('../database/indexdb')
 
 const stripeSinglePay = async (req, res) => {
   try {
@@ -49,6 +50,50 @@ const stripeSinglePay = async (req, res) => {
   }
 }
 
+const stripeWebhook = async (req, res) => {
+  const webhookSecret = config.STRIPE_WEBHOOK_SECRET
+  const sig = req.headers['stripe-signature']
+  let event
+
+  try {
+    event = stripe(config.STRIPE_PRODUCTION_SECRET).webhooks.constructEvent(
+      req.body,
+      sig,
+      webhookSecret
+    )
+  } catch (err) {
+    res.status(400).send(`Webhook Error: ${err.message}`)
+    console.log(`Webhook Error: ${err.message}`)
+    return
+  }
+
+  switch (event.type) {
+    case 'payment_intent.succeeded':
+      const paymentIntent = event.data.object
+
+      try {
+        const pool = await getConnection()
+        await pool
+          .request()
+          .input('ID', sql.Int, paymentIntent.metadata.idf)
+          .input('IdPago', sql.NVarChar, paymentIntent.id)
+          .input('EmailPago', sql.NVarChar, paymentIntent.receipt_email)
+          .input('DatePago', sql.DateTime, new Date())
+          .query(queries.updateRecords)
+      } catch (err) {
+        console.log(`Database Error: ${err.message}`)
+      }
+
+      break
+    default:
+      console.log(`Event type ${event.type}`)
+      break
+  }
+
+  res.send()
+}
+
 module.exports = {
   stripeSinglePay,
+  stripeWebhook,
 }
