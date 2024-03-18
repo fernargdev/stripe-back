@@ -4,6 +4,7 @@ const router = express.Router()
 const {
   stripeSinglePay,
   stripeWebhook,
+  stripeSinglePayB2B,
 } = require('../controllers/payments.controller')
 
 router.get('/api', (req, res) => {
@@ -11,6 +12,7 @@ router.get('/api', (req, res) => {
 })
 
 router.post('/api/pay', express.json(), stripeSinglePay)
+router.post('/api/b2b', express.json(), stripeSinglePayB2B)
 
 router.post(
   '/api/stripe-webhook',
