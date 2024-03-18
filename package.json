@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
+    "sql": "node src/scripts/sql.js",
     "lint": "eslint ."
   },
   "author": "Fernando Angel Rodriguez Gonzalez",
