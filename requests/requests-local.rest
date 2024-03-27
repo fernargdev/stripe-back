@@ -12,6 +12,16 @@ Content-Type: application/json
   "company": "EMPRESA CARNICA SANCTI SPIRITUS"
 }
 
+### POST /api/muhia/stripe
+POST http://localhost:3001/api/muhia/stripe
+Content-Type: application/json
+
+{
+  "total": 4.50,
+  "successUrl": "https://iracuba.com/",
+  "cancelUrl": "https://iracuba.com/"
+}
+
 ### POST /api/pay
 POST http://localhost:3001/api/pay
 Content-Type: application/json

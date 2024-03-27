@@ -50,6 +50,54 @@ const stripeSinglePay = async (req, res) => {
   }
 }
 
+const muhiaStripe = async (req, res) => {
+  try {
+    console.log(req.body)
+
+    const payment = req.body
+
+    // Crear la descripción del booking
+    let description = `Pago para Producciones Muhia`
+    let name = `Monto Total: $${payment.total}`
+    let successUrl = payment.successUrl || 'https://tienda.produccionesmuhia.ca'
+    let cancelUrl = payment.cancelUrl || 'https://tienda.produccionesmuhia.ca'
+
+    // Stripe Checkout
+    const stripeCheckout = stripe(config.STRIPE_PRODUCTION_SECRET).checkout
+
+    //   Create Checkout Session
+    const session = await stripeCheckout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'payment',
+      success_url: successUrl,
+      cancel_url: cancelUrl,
+      line_items: [
+        {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: name,
+              description: description,
+            },
+            unit_amount: Math.round(payment.total * 100),
+          },
+          quantity: 1,
+        },
+      ],
+      metadata: {
+        idf: payment.idf,
+      },
+    })
+
+    res.json(session.url)
+  } catch (error) {
+    return res.status(400).json({
+      error: error,
+      message: req.body,
+    })
+  }
+}
+
 const stripeSinglePayB2B = async (req, res) => {
   try {
     console.log(req.body)
@@ -143,6 +191,7 @@ const stripeWebhook = async (req, res) => {
 
 module.exports = {
   stripeSinglePay,
+  muhiaStripe,
   stripeWebhook,
   stripeSinglePayB2B,
 }
